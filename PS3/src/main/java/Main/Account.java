@@ -3,23 +3,26 @@ package Main;
 import java.util.Date;
 import Exceptions.InsufficientFundsException;
 
+
 public class Account {
 	
 	private int id;
 	private double balance;
 	private double annualInterestRate;
-	private Date dateCreated = new Date();
+	private Date dateCreated;
 	
 	public Account() {
 		id = 0;
 		balance = 0;
 		annualInterestRate = 0;
+		this.dateCreated = new Date();
 	}
 	
 	public Account(int id, double balance) {
 		this.id = id;
 		this.balance = balance;
 		this.annualInterestRate = 0;
+		this.dateCreated = new Date();
 	}
 
 	public int getId() {
@@ -55,7 +58,8 @@ public class Account {
 	}
 	
 	
-	public void withdram(double amount) throws InsufficientFundsException {
+	public void withdraw(double amount) throws InsufficientFundsException {
+		
 		if (amount <= balance) {
 			balance -= amount;
 		} else {
@@ -63,12 +67,7 @@ public class Account {
 		}
 	}
 	
-	public Account(int id, double balance, double annualInterestRate) {
-		super();
-		this.id = id;
-		this.balance = balance;
-		this.annualInterestRate = annualInterestRate;
-	}
+
 
 	public void deposit(double amount) {
 		balance += amount;

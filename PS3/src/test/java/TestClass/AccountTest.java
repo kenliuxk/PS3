@@ -1,5 +1,6 @@
 package TestClass;
 
+import Main.Account;
 import static org.junit.Assert.*;
 
 import org.junit.After;
@@ -9,10 +10,11 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import Exceptions.InsufficientFundsException;
-import Main.Account;
+
 
 public class AccountTest {
 
+	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 	}
@@ -41,18 +43,10 @@ public class AccountTest {
 		Account testAccount = new Account(id, balance);
 		testAccount.setAnnualInterestRate(annualInterestRate);
 		double MonthlyInterestRate = annualInterestRate / 12;
+		assertEquals(testAccount.getAnnualInterestRate(),annualInterestRate , 4.5);
 		assertEquals(testAccount.getMonthlyInterestRate(), MonthlyInterestRate, 0.375);
+		assertEquals(testAccount.getId(),id);
 		
-		
-		testAccount.withdram(withdraw);
-		System.out.println("You have withdrew $" + withdraw);
-		double balanceafterwithdraw = balance - withdraw;
-		assertEquals(testAccount.getBalance(),balanceafterwithdraw,17500);
-		
-		testAccount.deposit(deposit);
-		System.out.println("You have deposited $" + deposit);
-		double balanceafterdeposit = balance + deposit;
-		assertEquals(testAccount.getBalance(),balanceafterdeposit,20500);
 		
 		System.out.println("Balance: $" + testAccount.getBalance());
 		System.out.println("Monthly Interest Rate: " +testAccount.getMonthlyInterestRate());
@@ -61,14 +55,45 @@ public class AccountTest {
 		
 		
 	}
-	@Test(expected = InsufficientFundsException.class)
-	public void testException() throws InsufficientFundsException{
-		Account testAccount = new Account();
-		
-		testAccount.setBalance(1000);
-		testAccount.withdram(1100);
-		
+	@Test
+	public final void testWithdraw() throws InsufficientFundsException {
+		int id = 1122;
+		double balance = 20000;
+		double withdraw = 2500;
+		Account testWithdraw = new Account(id, balance);
+		testWithdraw.withdraw(withdraw);
+		System.out.println("You have withdrew $" + withdraw);
+		double balanceafterwithdraw = balance - withdraw;
+		assertEquals(testWithdraw.getBalance(),balanceafterwithdraw,17500);
+		System.out.println("Your balance now is $" + balanceafterwithdraw);
+	}
+	
+	@Test
+	public final void testDeposit() throws InsufficientFundsException {
+		int id = 1122;
+		double balance = 20000;
+		double deposit = 3000;
+		Account testDeposit = new Account(id, balance);
+		testDeposit.deposit(deposit);
+		System.out.println("You have deposited $" + deposit);
+		double balanceafterdeposit = balance + deposit;
+		assertEquals(testDeposit.getBalance(),balanceafterdeposit,20500);
+		System.out.println("Your balance now is $" + balanceafterdeposit);
+	}
+	
 
+	
+	@Test(expected = InsufficientFundsException.class)
+	public final void testException() throws InsufficientFundsException{
+		
+		Account testWithdraw = new Account();
+		
+		testWithdraw.setId(1);
+		testWithdraw.setBalance(1000);
+		
+		
+		testWithdraw.withdraw(1100);
+		
 	}
 
 }
