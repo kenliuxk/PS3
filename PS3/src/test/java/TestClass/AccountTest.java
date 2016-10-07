@@ -8,8 +8,8 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
 import Exceptions.InsufficientFundsException;
+
 
 
 public class AccountTest {
@@ -33,12 +33,10 @@ public class AccountTest {
 
 	
 	@Test
-	public void testAccount() throws InsufficientFundsException {
+	public void testAccount() {
 		int id = 1122;
 		double balance = 20000;
 		double annualInterestRate = 4.5;
-		double withdraw = 2500;
-		double deposit = 3000;
 		
 		Account testAccount = new Account(id, balance);
 		testAccount.setAnnualInterestRate(annualInterestRate);
@@ -82,17 +80,21 @@ public class AccountTest {
 	}
 	
 
+
 	
 	@Test(expected = InsufficientFundsException.class)
 	public final void testException() throws InsufficientFundsException{
 		
 		Account testWithdraw = new Account();
+		double amount = 100;
+		InsufficientFundsException FundsExcep = new InsufficientFundsException(amount);
 		
 		testWithdraw.setId(1);
 		testWithdraw.setBalance(1000);
+		FundsExcep.getAmount();
 		
 		
-		testWithdraw.withdraw(1100);
+	testWithdraw.withdraw(1100);
 		
 	}
 
